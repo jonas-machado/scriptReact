@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html { 
     background: url(../img/pixel-city-chill.gif) no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -40,11 +44,11 @@ html {
     bottom: 0;
     margin: auto;
     width: 260px;
-    height: 260px;
+    height: 540px;
     border-radius: 5px;
-    background: rgba(3, 3, 3, 0.556);
-    box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.7);
-    display: none;
+    background: rgba(3, 3, 3, 0.663);
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.778);
+    display: block;
     transition: linear;
   }
   
@@ -81,7 +85,23 @@ html {
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.433);
   }
   
+.h1Cadastro {
+  padding-top: 0.5rem;
+  position: relative;
+  margin: 25px auto;
+  width: 230px;
+  border-top: rgba(0, 0, 0, 0.42) 0.20rem solid;
+  border-radius: 0.2rem;
+}
+
   /* Inputs */
+
+  .form-error {
+    position: absolute;
+    margin: 0 1.7rem 0 1.7rem;
+    color: rgba(240, 248, 255, 0.650);
+  }
+
   a,
   input{
     font-family: 'Open Sans Condensed', sans-serif;
@@ -89,7 +109,7 @@ html {
     position: relative;
     width: 80%;
     display: block;
-    margin: 9px auto;
+    margin: 20px auto auto auto;
     font-size: 17px;
     color: #fff;
     padding: 8px;
@@ -124,7 +144,7 @@ html {
     font-family: 'Open Sans Condensed', sans-serif;
     text-align: center;
     padding: 4px 8px;
-    background: rgba(0, 0, 0, 0.556);
+    background: rgba(0, 0, 0, 0.668);
     -webkit-transition: all 2s ease-in-out;
     -moz-transition: all 2s ease-in-out;
     -o-transition: all 2s ease-in-out;
@@ -218,3 +238,4 @@ html {
   .orange-btn{
     background: rgba(87,198,255,.5);
   }
+
