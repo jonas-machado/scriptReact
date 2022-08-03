@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import "./App.css";
+import Axios from "axios"
 
 function App() {
 
@@ -17,12 +18,26 @@ function App() {
     confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Ta tirando com a minha cara?')
   })
   
-  const handleClickRegister = (values) => console.log(values)
-  const handleClickLogin = (values) => console.log(values)
+  const handleClickRegister = values => {
+    Axios.post("http://127.0.0.1:3001/register", {
+      email: values.email,
+      password: values.password,
+    }).then(result =>{
+      console.log(result)
+    })
+  }
+  const handleClickLogin = values => {
+    Axios.post("http://127.0.0.1:3001/register2", {
+      email: values.email,
+      password: values.password,
+    }).then(response => {
+      console.log(response)
+    })
+  }
   return (
     <div id="container" className="container" >
       <h1>Login</h1>
-      <Formik initialValues={{}} onSubmit={handleClickLogin} validationSchema={validationLogin}>
+      <Formik initialValues={{email: "", password: "", confirmPassword: ""}} onSubmit={handleClickLogin} validationSchema={validationLogin}>
         <Form className="login-form">
           <div className="login-form-group">
             <Field name="email" className="form-field" placeholder="Email" />
@@ -36,7 +51,7 @@ function App() {
         </Form>
       </Formik>
       <h1 className="h1Cadastro">Cadastro</h1>
-      <Formik initialValues={{}} onSubmit={handleClickRegister} validationSchema={validationRegister}>
+      <Formik initialValues={{email: "", password: "", confirmPassword: ""}} onSubmit={handleClickRegister} validationSchema={validationRegister}>
         <Form className="login-form">
           <div className="login-form-group">
             <Field name="email" className="form-field" placeholder="Email" />
