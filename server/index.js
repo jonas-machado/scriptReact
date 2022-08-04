@@ -15,6 +15,25 @@ const db = mysql.createPool({
 app.use(express.json())
 app.use(cors())
 
+app.post("/logar", (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    db.query("SELECT * FROM banco.usuarios WHERE email = ?", 
+        [email], (err, result) => {
+            if (err) {
+                res.send(err)
+            }
+            if(result.length > 0){
+                bcrypt.compare(password, result[0].password, (err, result) => {
+                    if(result){
+                        res.send("Usuário logado")
+                    } 
+                })
+                res.send({msg: "Logado"})
+            } else {res.send({msg: "Conta não encontrada"})}
+    })
+})
+
 app.post("/register", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -39,26 +58,7 @@ app.post("/register", (req, res) => {
     })
 })
 
-app.post("/register2", (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
 
-    db.query(
-        "SELECT * FROM banco.usuarios WHERE email = ?", 
-        [email]), (err, result) => {
-            if (err) {
-                res.send(err)
-            }
-            if(result.length > 0){
-                bcrypt.compare(password, result[0].password, (err, result) => {
-                    if(result){
-                        res.send("Usuário logado")
-                    } else {res.send("Senha está incorreta")}
-                })
-                res.send({msg: "Logado"})
-            } else {res.send({msg: "Conta não encontrada"})}
-    }
-})
 
 app.listen(3001, () => {
     console.log("Rodando na porta 3001")

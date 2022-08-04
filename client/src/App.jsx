@@ -18,22 +18,29 @@ function App() {
     confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Ta tirando com a minha cara?')
   })
   
+  const handleClickLogin = values => {
+    Axios.post("http://127.0.0.1:3001/logar", {
+      email: values.email,
+      password: values.password,
+    }).then(result =>{
+      console.log(result)
+      console.log("funcionando")
+    }).catch(error => {
+      throw error;
+    });
+  }
+
   const handleClickRegister = values => {
     Axios.post("http://127.0.0.1:3001/register", {
       email: values.email,
       password: values.password,
     }).then(result =>{
       console.log(result)
+      console.log("funcionando")
     })
   }
-  const handleClickLogin = values => {
-    Axios.post("http://127.0.0.1:3001/register2", {
-      email: values.email,
-      password: values.password,
-    }).then(response => {
-      console.log(response)
-    })
-  }
+
+
   return (
     <div id="container" className="container" >
       <h1>Login</h1>
@@ -47,7 +54,7 @@ function App() {
             <Field name="password" className="form-field" placeholder="Senha" />
             <ErrorMessage component="span" name="password" className="form-error"/>
           </div>
-          <input className="a" id="login" type="submit"/>
+          <input className="a" id="login" type="submit" />
         </Form>
       </Formik>
       <h1 className="h1Cadastro">Cadastro</h1>
@@ -65,7 +72,7 @@ function App() {
             <Field name="confirmPassword" className="form-field" placeholder="Confirme sua senha" />
             <ErrorMessage component="span" name="confirmPassword" className="form-error"/>
           </div>
-          <input className="a" id="login" type="submit"/>
+          <input className="a" id="register" type="submit"/>
         </Form>
       </Formik>
       <h1></h1>
