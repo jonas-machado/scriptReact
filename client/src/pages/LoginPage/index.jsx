@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import "./index.css";
+import "./style.css";
 import Axios from "axios"
 
 function LoginPage() {
