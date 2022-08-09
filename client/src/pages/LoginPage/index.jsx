@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import "./style.css";
@@ -6,6 +6,7 @@ import Axios from "axios"
 
 function LoginPage() {
 
+  Axios.defaults.withCredentials = true
 
   const validationLogin = yup.object().shape({
     email: yup.string().email('Errrrrrrrrouuuuuuuu').required('Tem email não parça?'),
@@ -40,6 +41,13 @@ function LoginPage() {
     })
   }
 
+  useEffect(() => {
+    Axios.get("http://127.0.0.1:3001/login").then((response) => {
+      if(response.data.loggedIn == true){
+      alert(response.data.user[0].email)
+      }
+  })
+  }, [])
 
   return (
     <div id="container" className="container" >

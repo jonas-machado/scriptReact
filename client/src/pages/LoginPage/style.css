@@ -44,7 +44,7 @@
       bottom: 0;
       margin: auto;
       width: 260px;
-      height: 540px;
+      height: 550px;
       border-radius: 5px;
       background: rgba(3, 3, 3, 0.663);
       box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.778);
@@ -98,8 +98,8 @@
   
     .form-error {
       position: absolute;
-      margin: 0 1.7rem 0 1.7rem;
-      color: rgba(240, 248, 255, 0.650);
+      margin: 0 1.7rem 0 1.9rem;
+      color: rgba(255, 59, 59, 0.835);
     }
   
     a,
@@ -239,4 +239,11 @@
       background: rgba(87,198,255,.5);
     }
   
-  
+ /* Cor de fundo do autocomplete */
+ input:-webkit-autofill,
+ input:-webkit-autofill:hover,
+ input:-webkit-autofill:focus,
+ input:-webkit-autofill:active {
+     transition: background-color 5000s ease-in-out 0s;
+     -webkit-text-fill-color: #fff !important;
+ }
