@@ -40,6 +40,27 @@ app.use(session({
     }
 }))
 
+const verifyJWT = (req, res, next) => {
+    const token = req.headers["x-access-token"]
+    if(!token){
+        res.send("Precisa do token");
+    } 
+    else {
+        jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+            if(err){
+                res.json({auth: false, msg: "falhou"});
+            } else {
+                req.userId = decoded.id;
+                next();
+            }
+        })
+    }
+}
+
+app.get("/isUserAuth", verifyJWT, (req, res) => {
+    res.send("Autenticado")
+})
+
 app.get("/login", (req, res) =>{
     if(req.session.user) {
         res.send({
@@ -49,7 +70,7 @@ app.get("/login", (req, res) =>{
     }else{res.send({loggedIn: false})}
 })
 
-app.post("/logar", (req, res) => {
+app.post("/login", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     db.query("SELECT * FROM banco.usuarios WHERE email = ?", 
@@ -60,17 +81,22 @@ app.post("/logar", (req, res) => {
             if(result.length > 0){
                 bcrypt.compare(password, result[0].password, (err, response) => {
                     if(response){
-                        req.session.user = result
 
                         const id = result[0].id
-                        const token = jwt.sign({id}, process.env.SECRET_KEY)
+                        const token = jwt.sign({id}, process.env.SECRET_KEY, {
+                            expiresIn: 300,
+                        })
+
+                        req.session.user = result
+
 
                         res.send("Usuário logado")
+
                     } else {
-                        res.send({msg: "Senha incorreta"})
+                        res.send({msg: "Alguma coisa deu errada"})
                     }
                 })
-            } else {res.send({msg: "Conta não encontrada"})}
+            } else {res.send({msg: "Alguma coisa deu errada"})}
     })
 })
 
