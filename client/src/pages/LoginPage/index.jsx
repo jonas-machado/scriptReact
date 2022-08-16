@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import "./style.css";
 import Axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 function LoginPage() {
-
-  Axios.defaults.withCredentials = true
+  let navigate = useNavigate()
+  const [ loginStatus, setLoginStatus] = useState(false)
 
   const validationLogin = yup.object().shape({
     email: yup.string().email('Errrrrrrrrouuuuuuuu').required('Tem email não parça?'),
@@ -23,31 +24,37 @@ function LoginPage() {
     Axios.post("http://127.0.0.1:3001/login", {
       email: values.email,
       password: values.password,
-    }).then(result =>{
-      console.log(result)
-      console.log("funcionando")
+    }).then((result) => {
+      if(!result.data.auth){
+        setLoginStatus(false)
+      } else {
+        localStorage.setItem("token", result.data.token)
+        setLoginStatus(true)
+        userAuthenticated()
+      }
     }).catch(error => {
       throw error;
     });
+  }
+
+  const userAuthenticated = () => {
+    Axios.get("http://127.0.0.1:3001/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token")
+      }
+    }).then(() => {
+      navigate("/home")
+    })
   }
 
   const handleClickRegister = values => {
     Axios.post("http://127.0.0.1:3001/register", {
       email: values.email,
       password: values.password,
-    }).then(result =>{
-      console.log(result)
-      console.log("funcionando")
-    })
+    }).then()
   }
 
-  useEffect(() => {
-    Axios.get("http://127.0.0.1:3001/login").then((response) => {
-      if(response.data.loggedIn == true){
-      alert(response.data.user[0].email)
-      }
-  })
-  }, [])
+  Axios.defaults.withCredentials = true
 
   return (
     <div id="container" className="container" >
@@ -83,7 +90,6 @@ function LoginPage() {
           <input className="a" id="register" type="submit"/>
         </Form>
       </Formik>
-      <h1></h1>
     </div>
   );
 }

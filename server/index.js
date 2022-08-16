@@ -81,8 +81,7 @@ app.post("/login", (req, res) => {
             if(result.length > 0){
                 bcrypt.compare(password, result[0].password, (err, response) => {
                     if(response){
-
-                        const id = result[0].id
+                        const id = result[0].idusuarios
                         const token = jwt.sign({id}, process.env.SECRET_KEY, {
                             expiresIn: 300,
                         })
@@ -90,13 +89,13 @@ app.post("/login", (req, res) => {
                         req.session.user = result
 
 
-                        res.send("Usuário logado")
+                        res.json({auth: true, token: token, result: result})
 
                     } else {
                         res.send({msg: "Alguma coisa deu errada"})
                     }
                 })
-            } else {res.send({msg: "Alguma coisa deu errada"})}
+            } else {res.json({auth: false, msg: "Alguma coisa deu errada"})}
     })
 })
 
