@@ -1,0 +1,135 @@
+
+  
+  html { 
+      background: url(../img/pixel-city-chill.gif) no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    
+    /* Login container */
+    .register-container .login-form{
+      margin: 0 1rem 0 1rem;
+    }
+
+    .register-container{
+      position: absolute!important;
+      top: 0!important;
+      left: 0!important;
+      right: 0!important;
+      bottom: 0!important;
+      margin: auto!important;
+      width: 600px;
+      height: 500px;
+      /*border-radius: 5px;*/
+      background: rgba(3, 3, 3, 0.663);
+      box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.778);
+      transition: linear;
+    }
+    
+    /* Heading */
+    .register-container h1{
+      font-family: 'Open Sans Condensed', sans-serif;
+      position: relative;
+      margin-top: 15px;
+      text-align: center;
+      font-size: 40px;
+      color: #ddd;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.433);
+    }
+  
+    /* Inputs */
+  
+    .register-container span {
+      color: rgba(240, 248, 255, 0.631);
+      border: none;
+      background-color: rgba(0, 0, 0, 0.802)!important;
+    }
+
+    .register-container a,
+    .register-container input{
+      background-color: rgba(0, 0, 0, 0.548)!important;
+      margin: 0;
+      font-family: 'Open Sans Condensed', sans-serif;
+      text-decoration: none;
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.637) !important;
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      background: rgba(3, 3, 3, 0.213);
+      -webkit-transition: all 2s ease-in-out;
+      -moz-transition: all 2s ease-in-out;
+      -o-transition: all 2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+    }
+    
+    .register-container input:focus{
+      outline: none;
+      box-shadow: 3px 3px 10px #333;
+      background: rgba(3,3,3,.18);
+    }
+    
+    /* Placeholders */
+    ::-webkit-input-placeholder {
+       color: #ddd;  }
+    :-moz-placeholder { /* Firefox 18- */
+       color: red;  }
+    ::-moz-placeholder {  /* Firefox 19+ */
+       color: red;  }
+    :-ms-input-placeholder {  
+       color: #333;  }
+    
+    /* Link */
+    .register-container .a{
+      cursor: pointer;
+      font-family: 'Open Sans Condensed', sans-serif;
+      text-align: center;
+      padding: 4px 8px;
+      background: rgba(0, 0, 0, 0.668);
+      -webkit-transition: all 2s ease-in-out;
+      -moz-transition: all 2s ease-in-out;
+      -o-transition: all 2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+    }
+    
+    .register-container .a:hover{
+      opacity: 0.7;
+    }
+
+    .register-container .orange-btn{
+      background: rgba(87,198,255,.5);
+    }
+  
+ /* Cor de fundo do autocomplete */
+ .register-container input:-webkit-autofill,
+ input:-webkit-autofill:hover,
+ input:-webkit-autofill:focus,
+ input:-webkit-autofill:active {
+     transition: background-color 5000s ease-in-out 0s;
+     -webkit-text-fill-color: #fff !important;
+ }
+
+ .register-container .btn-close{
+  outline: none;
+  border: none;
+  -webkit-appearance:none;
+  box-shadow: none !important;
+ }
+
+ /* .register-container .alert-dark {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background-color: rgba(227, 227, 227, 0.248);
+  border: #000 solid 0.12rem;
+  width: 100em;
+  height: 50px;
+ } */
+
+
+

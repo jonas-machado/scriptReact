@@ -1,7 +1,4 @@
-* {
-    box-sizing: border-box;
-  }
-  
+ 
   html { 
       background: url(../img/pixel-city-chill.gif) no-repeat center center fixed; 
       -webkit-background-size: cover;
@@ -9,16 +6,17 @@
       -o-background-size: cover;
       background-size: cover;
       overflow: hidden;
+      box-sizing: border-box;
     }
     
-    img{
+    .login-container .login-img{
       display: block;
       margin: auto;
       width: 100%;
       height: auto;
     }
     
-    #login-button{
+    .login-container #login-button{
       cursor: pointer;
       position: absolute;
       top: 0;
@@ -36,7 +34,7 @@
       box-shadow: 10px 10px 30px #000;}
     
     /* Login container */
-    #container{
+    .login-container{
       position: absolute;
       top: 0;
       left: 0;
@@ -52,7 +50,7 @@
       transition: linear;
     }
     
-    .close-btn{
+    .login-container .close-btn{
       position: absolute;
       cursor: pointer;
       font-family: 'Open Sans Condensed', sans-serif;
@@ -70,12 +68,12 @@
       transition: all 0.2s ease-in-out;
     }
     
-    .close-btn:hover{
+    .login-container .close-btn:hover{
       opacity: .5;
     }
     
     /* Heading */
-    h1{
+    .login-container .login-h1{
       font-family: 'Open Sans Condensed', sans-serif;
       position: relative;
       margin-top: 15px;
@@ -84,26 +82,17 @@
       color: #ddd;
       text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.433);
     }
-    
-  .h1Cadastro {
-    padding-top: 0.5rem;
-    position: relative;
-    margin: 25px auto;
-    width: 230px;
-    border-top: rgba(0, 0, 0, 0.42) 0.20rem solid;
-    border-radius: 0.2rem;
-  }
   
     /* Inputs */
   
-    .form-error {
+    .login-container .login-form-error {
       position: absolute;
       margin: 0 1.7rem 0 1.9rem;
       color: rgba(255, 59, 59, 0.835);
     }
   
-    a,
-    input{
+    .login-container a,
+    .login-container input{
       font-family: 'Open Sans Condensed', sans-serif;
       text-decoration: none;
       position: relative;
@@ -122,7 +111,7 @@
       transition: all 0.2s ease-in-out;
     }
     
-    input:focus{
+    .login-container input:focus{
       outline: none;
       box-shadow: 3px 3px 10px #333;
       background: rgba(3,3,3,.18);
@@ -139,7 +128,7 @@
        color: #333;  }
     
     /* Link */
-    .a{
+    .login-container .a{
       cursor: pointer;
       font-family: 'Open Sans Condensed', sans-serif;
       text-align: center;
@@ -151,16 +140,16 @@
       transition: all 0.2s ease-in-out;
     }
     
-    .a:hover{
+    .login-container .a:hover{
       opacity: 0.7;
     }
     
-    #remember-container{
+    .login-container #remember-container{
       position: relative;
       margin: -5px 20px;
     }
     
-    .checkbox {
+    .login-container .checkbox {
       position: relative;
       cursor: pointer;
       -webkit-appearance: none;
@@ -172,17 +161,17 @@
       height: 15px;
     }
     
-    .checkbox:checked:active {
+    .login-container .checkbox:checked:active {
       box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
     }
     
-    .checkbox:checked {
+    .login-container .checkbox:checked {
       background: rgba(3,3,3,.4);
       box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.5);
       color: #fff;
     }
     
-    .checkbox:checked:after {
+    .login-container .checkbox:checked:after {
       content: '\2714';
       font-size: 10px;
       position: absolute;
@@ -191,7 +180,7 @@
       color: #fff;
     }
     
-    #remember{
+    .login-container #remember{
       font-weight: bold;
       position: absolute;
       font-size: 13px;
@@ -202,7 +191,7 @@
       
     }
     
-    #forgotten{
+    .login-container #forgotten{
       position: absolute;
       font-size: 12px;
       font-family: 'Hind', sans-serif;
@@ -216,11 +205,11 @@
       transition: all 0.2s ease-in-out;
     }
     
-    #forgotten:hover{
+    .login-container #forgotten:hover{
       color: rgba(255,255,255,.6);
     }
     
-    #forgotten-container{
+    .login-container #forgotten-container{
       position: absolute;
       top: 0;
       left: 0;
@@ -235,12 +224,12 @@
       display: none;
     }
     
-    .orange-btn{
+    .login-container .orange-btn{
       background: rgba(87,198,255,.5);
     }
   
  /* Cor de fundo do autocomplete */
- input:-webkit-autofill,
+ .login-container input:-webkit-autofill,
  input:-webkit-autofill:hover,
  input:-webkit-autofill:focus,
  input:-webkit-autofill:active {
