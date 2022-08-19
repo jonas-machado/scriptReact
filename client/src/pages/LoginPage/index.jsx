@@ -4,8 +4,14 @@ import * as yup from "yup";
 import "./style.css";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 function LoginPage() {
+  const notify = (text) =>
+    toast.info("Opa", {
+      theme: "dark",
+    });
+  setTimeout(notify(), 1550);
   let navigate = useNavigate();
   const [loginStatus, setLoginStatus] = useState(false);
 
