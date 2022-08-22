@@ -1,18 +1,10 @@
-import React from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-const notify = () =>
-  toast.info("Opa", {
-    theme: "dark",
-  });
+import { React } from "react";
 
 function HomePage() {
   return (
-    <>
-      <button onClick={notify}>teste</button>
-      <ToastContainer />
-    </>
+    <div>
+      <h1>teste</h1>
+    </div>
   );
 }
 

@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import "./style.css";
+import styles from "./style.module.css";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function LoginPage() {
   const notify = (text) =>
     toast.info("Opa", {
       theme: "dark",
     });
-  setTimeout(notify(), 1550);
+  //setTimeout(notify(), 1550);
   let navigate = useNavigate();
   const [loginStatus, setLoginStatus] = useState(false);
 
   const validationLogin = yup.object().shape({
     email: yup
       .string()
-      .email("Errrrrrrrrouuuuuuuu")
-      .required("Tem email não parça?"),
-    password: yup.string().required("Tem que colocar"),
+      .email("Coloque no padrão: @email.com")
+      .required("Insira o e-mail"),
+    password: yup.string().required("Insira a senha"),
   });
 
   const handleClickLogin = (values) => {
@@ -55,33 +58,45 @@ function LoginPage() {
   Axios.defaults.withCredentials = true;
 
   return (
-    <div id="container" className="login-container">
-      <h1 className="login-h1">Login</h1>
-      <Formik
-        initialValues={{ email: "", password: "", confirmPassword: "" }}
-        onSubmit={handleClickLogin}
-        validationSchema={validationLogin}
-      >
-        <Form className="login-form">
-          <div className="login-form-group">
-            <Field name="email" className="form-field" placeholder="Email" />
-            <ErrorMessage
-              component="span"
-              name="email"
-              className="login-form-error"
-            />
-          </div>
-          <div className="login-form-group">
-            <Field name="password" className="form-field" placeholder="Senha" />
-            <ErrorMessage
-              component="span"
-              name="password"
-              className="form-error"
-            />
-          </div>
-          <input className="a" id="login" type="submit" />
-        </Form>
-      </Formik>
+    <div className={styles.bgBody}>
+      <Container id="container" className={styles.loginContainer}>
+        <Col>
+          <h1 className={styles.loginH1}>Login</h1>
+          <Formik
+            initialValues={{ email: "", password: "", confirmPassword: "" }}
+            onSubmit={handleClickLogin}
+            validationSchema={validationLogin}
+          >
+            <Form className={styles.loginForm}>
+              <div className={styles.loginFormGroup}>
+                <Field
+                  name="email"
+                  className={styles.formField}
+                  placeholder="Email"
+                />
+                <ErrorMessage
+                  component="span"
+                  name="email"
+                  className={styles.loginFormError}
+                />
+              </div>
+              <div className={styles.loginFormGroup}>
+                <Field
+                  name="password"
+                  className={styles.formField}
+                  placeholder="Senha"
+                />
+                <ErrorMessage
+                  component="span"
+                  name="password"
+                  className={styles.loginFormError}
+                />
+              </div>
+              <input className={styles.a} id="login" type="submit" />
+            </Form>
+          </Formik>
+        </Col>
+      </Container>
     </div>
   );
 }

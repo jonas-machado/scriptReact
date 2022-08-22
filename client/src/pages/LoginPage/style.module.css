@@ -1,4 +1,8 @@
-html {
+.bgBody {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   background: url(../img/pixel-city-chill.gif) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -8,14 +12,14 @@ html {
   box-sizing: border-box;
 }
 
-.login-container .login-img {
+.loginImg {
   display: block;
   margin: auto;
   width: 100%;
   height: auto;
 }
 
-.login-container #login-button {
+.loginButton {
   cursor: pointer;
   position: absolute;
   top: 0;
@@ -33,45 +37,23 @@ html {
   box-shadow: 10px 10px 30px #000;
 }
 
-.login-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  width: 260px;
-  height: 550px;
+.loginContainer {
+  width: 350px;
+  align-items: center;
+  justify-content: center;
+  margin: 50px;
   border-radius: 5px;
-  background: rgba(3, 3, 3, 0.663);
-  box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.778);
-  display: block;
+  background: rgba(3, 3, 3, 0.689);
+  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.778);
+  display: flex;
   transition: linear;
-}
-
-.login-container .close-btn {
-  position: absolute;
-  cursor: pointer;
-  font-family: "Open Sans Condensed", sans-serif;
-  line-height: 18px;
-  top: 3px;
-  right: 3px;
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  border-radius: 10px;
-  opacity: 0.2;
   -webkit-transition: all 2s ease-in-out;
   -moz-transition: all 2s ease-in-out;
   -o-transition: all 2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 
-.login-container .close-btn:hover {
-  opacity: 0.5;
-}
-
-.login-container .login-h1 {
+.loginH1 {
   font-family: "Open Sans Condensed", sans-serif;
   position: relative;
   margin-top: 15px;
@@ -81,73 +63,79 @@ html {
   text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.433);
 }
 
-.login-container .login-form-error {
+.loginFormError {
   position: absolute;
-  margin: 0 1.7rem 0 1.9rem;
+  margin: 0 1.7rem 0 2.1rem;
   color: rgba(255, 59, 59, 0.835);
 }
 
-.login-container a,
-.login-container input {
+.loginContainer a,
+.loginContainer input {
   font-family: "Open Sans Condensed", sans-serif;
   text-decoration: none;
   position: relative;
   width: 80%;
   display: block;
-  margin: 20px auto auto auto;
+  margin: 1.5rem auto auto auto;
   font-size: 17px;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.622);
   padding: 8px;
   border-radius: 6px;
   border: none;
-  background: rgba(3, 3, 3, 0.213);
+  background-color: rgba(0, 0, 0, 0.47) !important;
   -webkit-transition: all 2s ease-in-out;
   -moz-transition: all 2s ease-in-out;
   -o-transition: all 2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 
-.login-container input:focus {
+.loginContainer ::placeholder {
+  color: rgba(255, 255, 255, 0.622);
+}
+
+.loginContainer input:focus {
+  border: none;
   outline: none;
-  box-shadow: 3px 3px 10px #333;
+  box-shadow: 0px 0px 10px rgb(0, 0, 0);
   background: rgba(3, 3, 3, 0.18);
 }
 
 ::-webkit-input-placeholder {
-  color: #ddd;
+  color: rgba(255, 255, 255, 0.622);
 }
 :-moz-placeholder {
-  color: red;
+  color: rgba(255, 255, 255, 0.622);
 }
 ::-moz-placeholder {
-  color: red;
+  color: rgba(255, 255, 255, 0.622);
 }
 :-ms-input-placeholder {
-  color: #333;
+  color: rgba(255, 255, 255, 0.622);
 }
 
-.login-container .a {
+.a {
   cursor: pointer;
   font-family: "Open Sans Condensed", sans-serif;
   text-align: center;
   padding: 4px 8px;
-  background: rgba(0, 0, 0, 0.668);
+  margin-bottom: 2rem !important;
+  background: rgba(0, 0, 0, 0.455) !important;
   -webkit-transition: all 2s ease-in-out;
   -moz-transition: all 2s ease-in-out;
   -o-transition: all 2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 
-.login-container .a:hover {
+.a:hover {
   opacity: 0.7;
 }
 
-.login-container #remember-container {
+.rememberContainer {
   position: relative;
   margin: -5px 20px;
 }
 
-.login-container .checkbox {
+.checkbox {
   position: relative;
   cursor: pointer;
   -webkit-appearance: none;
@@ -159,12 +147,12 @@ html {
   height: 15px;
 }
 
-.login-container .checkbox:checked:active {
+.checkbox:checked:active {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
     inset 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.login-container .checkbox:checked {
+.checkbox:checked {
   background: rgba(3, 3, 3, 0.4);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
     inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05),
@@ -172,7 +160,7 @@ html {
   color: #fff;
 }
 
-.login-container .checkbox:checked:after {
+.checkbox:checked:after {
   content: "\2714";
   font-size: 10px;
   position: absolute;
@@ -181,7 +169,7 @@ html {
   color: #fff;
 }
 
-.login-container #remember {
+.remember {
   font-weight: bold;
   position: absolute;
   font-size: 13px;
@@ -191,7 +179,7 @@ html {
   left: 20px;
 }
 
-.login-container #forgotten {
+.forgotten {
   position: absolute;
   font-size: 12px;
   font-family: "Hind", sans-serif;
@@ -205,11 +193,11 @@ html {
   transition: all 0.2s ease-in-out;
 }
 
-.login-container #forgotten:hover {
+.forgotten:hover {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.login-container #forgotten-container {
+.forgottenContainer {
   position: absolute;
   top: 0;
   left: 0;
@@ -224,14 +212,14 @@ html {
   display: none;
 }
 
-.login-container .orange-btn {
+.orangeBtn {
   background: rgba(87, 198, 255, 0.5);
 }
 
-.login-container input:-webkit-autofill,
+.loginContainer input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: #fff !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.622) !important;
 }

@@ -12,11 +12,11 @@
   box-sizing: border-box;
 }
 
-.register-container .login-form {
+.loginForm {
   margin: 0 1rem 0 1rem;
 }
 
-.register-container {
+.registerContainer {
   width: 600px;
   border-radius: 5px;
   background: rgba(3, 3, 3, 0.663);
@@ -24,7 +24,7 @@
   transition: linear;
 }
 
-.register-container h1 {
+.registerContainer h1 {
   font-family: "Open Sans Condensed", sans-serif;
   position: relative;
   padding-top: 11px;
@@ -34,14 +34,14 @@
   text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.433);
 }
 
-.register-container span {
+.registerContainer span {
   color: rgba(240, 248, 255, 0.631);
   border: none;
   background-color: rgba(0, 0, 0, 0.802) !important;
 }
 
-.register-container a,
-.register-container input {
+.registerContainer a,
+.registerContainer input {
   background-color: rgba(0, 0, 0, 0.548) !important;
   margin: 0;
   font-family: "Open Sans Condensed", sans-serif;
@@ -58,7 +58,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.register-container input:focus {
+.registerContainer input:focus {
   outline: none;
   box-shadow: 0px 0px 10px rgb(0, 0, 0);
   background: rgba(3, 3, 3, 0.18);
@@ -77,8 +77,8 @@
   color: #333;
 }
 
-.register-container .a {
-  margin-bottom: 1.5rem;
+.a {
+  margin-bottom: 1.5rem !important;
   cursor: pointer;
   font-family: "Open Sans Condensed", sans-serif;
   text-align: center;
@@ -90,30 +90,23 @@
   transition: all 0.2s ease-in-out;
 }
 
-.register-container .a:hover {
+.a:hover {
   opacity: 0.7;
 }
 
-.register-container .orange-btn {
+.orange-btn {
   background: rgba(87, 198, 255, 0.5);
 }
 
-.register-container input:-webkit-autofill,
+.registerContainer input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: #fff !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.622) !important;
 }
 
-.register-container .btn-close {
-  outline: none;
-  border: none;
-  -webkit-appearance: none;
-  box-shadow: none !important;
-}
-
-.register-container .alert-dark {
+.alertDark {
   display: flex;
   align-items: center;
   padding: 0;
@@ -124,7 +117,7 @@ input:-webkit-autofill:active {
   height: 50px;
 }
 
-.form-error {
+.formError {
   color: rgba(255, 0, 0, 0.693) !important;
   display: flex;
   align-items: center;
