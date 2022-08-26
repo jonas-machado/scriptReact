@@ -10,6 +10,7 @@ const saltRounds = 10
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const session = require("express-session")
+const axios = require('axios')
 
 const jwt = require("jsonwebtoken")
 
@@ -56,6 +57,11 @@ const verifyJWT = (req, res, next) => {
         })
     }
 }
+
+
+app.get("/monitoramento", (req, res) => {
+    axios.get("http://172.16.40.9:17777/SolarWinds/InformationService/v3/Json/Query?query=SELECT+Uri+FROM+Orion.Pollers+ORDER+BY+PollerID+WITH+ROWS+1+TO+3+WITH+TOTALROWS HTTP/1.1").then(resp => resp.json()).then(result => console.log(result.data)).catch((e) => console.log(e))
+})
 
 app.get("/isUserAuth", verifyJWT, (req, res) => {
     res.send("Autenticado")

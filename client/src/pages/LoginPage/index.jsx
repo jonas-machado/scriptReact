@@ -50,12 +50,14 @@ function LoginPage() {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
-    }).then(() => {
-      navigate("/home");
+    }).then((response) => {
+      console.log(response);
     });
   };
 
   Axios.defaults.withCredentials = true;
+
+  const [remember, setRemember] = useState(true);
 
   return (
     <div className={styles.bgBody}>
@@ -92,9 +94,25 @@ function LoginPage() {
                   className={styles.loginFormError}
                 />
               </div>
-              <input className={styles.a} id="login" type="submit" />
+              <Col className={`${styles.btnEnviar} d-grid gap-2`}>
+                <button className={styles.a} id="register" type="submit">
+                  Enviar
+                </button>
+              </Col>
             </Form>
           </Formik>
+          <Row>
+            <div className={styles.rememberContainer}>
+              <input
+                type="checkbox"
+                id="checkbox-2-1"
+                checked
+                className={styles.checkbox}
+                onChange={(e) => setRemember(e.target.checked)}
+              />
+              <span className={styles.remember}>Remember me</span>
+            </div>
+          </Row>
         </Col>
       </Container>
     </div>
