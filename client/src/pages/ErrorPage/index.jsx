@@ -5,7 +5,6 @@ function ErrorPage() {
   return (
     <div className={styles.bodyError}>
       <figure>
-        <div className={styles.sadMac2}></div>
         <figcaption>
           <span className={styles.srText}>Error 404: Not Found</span>
           <span className={styles.e}></span>

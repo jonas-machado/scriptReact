@@ -170,6 +170,15 @@
   background: rgba(0, 0, 0, 0.455);
   height: 1.1rem;
   width: 1.1rem;
+  -webkit-transition: all 5s ease-in-out;
+  -moz-transition: all 5s ease-in-out;
+  -o-transition: all 5s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.checkbox:focus {
+  box-shadow: 0px 0px 3px rgb(0, 0, 0) !important;
+  background: rgba(0, 0, 0, 0.455) !important;
 }
 
 .checkbox:checked:active {

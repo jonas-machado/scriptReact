@@ -55,6 +55,12 @@ function LoginPage() {
     });
   };
 
+  const monitoramento = () => {
+    Axios.get("http://127.0.0.1:3001/monitoramento").then((response) =>
+      console.log(response)
+    );
+  };
+  monitoramento();
   Axios.defaults.withCredentials = true;
 
   const [remember, setRemember] = useState(true);
@@ -106,7 +112,6 @@ function LoginPage() {
               <input
                 type="checkbox"
                 id="checkbox-2-1"
-                checked
                 className={styles.checkbox}
                 onChange={(e) => setRemember(e.target.checked)}
               />

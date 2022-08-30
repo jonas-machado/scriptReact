@@ -7,6 +7,15 @@ const cors = require("cors")
 const bcrypt = require("bcrypt")
 const saltRounds = 10
 
+const orion = require("solar-orionjs")({
+    server: "172.16.40.9",
+    port: 17778,
+    auth: {
+        username: "redes2020",
+        password: "OT#internet2018"
+    }
+})
+
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const session = require("express-session")
@@ -60,8 +69,12 @@ const verifyJWT = (req, res, next) => {
 
 
 app.get("/monitoramento", (req, res) => {
-    axios.get("http://172.16.40.9:17777/SolarWinds/InformationService/v3/Json/Query?query=SELECT+Uri+FROM+Orion.Pollers+ORDER+BY+PollerID+WITH+ROWS+1+TO+3+WITH+TOTALROWS HTTP/1.1").then(resp => resp.json()).then(result => console.log(result.data)).catch((e) => console.log(e))
-})
+    orion.query({query:`SELECT EventID, EventTime, NetworkNode, NetObjectID, EventType, Message, Acknowledged, NetObjectType, TimeStamp
+    FROM Orion.Events
+    where EventTime(date) BETWEEN '2022-08-29 23:00:00' AND '2022-08-30 23:00:00'`}, 
+    function (result){
+        res.send(result);
+    });})
 
 app.get("/isUserAuth", verifyJWT, (req, res) => {
     res.send("Autenticado")
