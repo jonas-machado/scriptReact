@@ -7,6 +7,7 @@ const cors = require("cors")
 const bcrypt = require("bcrypt")
 const saltRounds = 10
 
+
 const orion = require("solar-orionjs")({
     server: "172.16.40.9",
     port: 17778,
@@ -67,14 +68,21 @@ const verifyJWT = (req, res, next) => {
     }
 }
 
+//discord bot
 
+
+//monitoramento
 app.get("/monitoramento", (req, res) => {
-    orion.query({query:`SELECT EventID, EventTime, NetworkNode, NetObjectID, EventType, Message, Acknowledged, NetObjectType, TimeStamp
-    FROM Orion.Events
-    where EventTime(date) BETWEEN '2022-08-29 23:00:00' AND '2022-08-30 23:00:00'`}, 
+    orion.query({query:`SELECT TOP 25 Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`}, 
     function (result){
         res.send(result);
     });})
+
+const instance = axios.create({
+    host: "172.16.40.9:17778",
+    user: "redes2020",
+    password: "OT#internet2018",
+})
 
 app.get("/isUserAuth", verifyJWT, (req, res) => {
     res.send("Autenticado")
