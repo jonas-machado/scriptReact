@@ -120,9 +120,10 @@ const adicionar = () => {
         orion.query(
           {
             query: `SELECT TOP 15 Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
+            //query: `SELECT Message, EventTime, GETDATE() AS [GetDate], GETUTCDATE() AS [getUTCDate] FROM Orion.Events`,
           },
           function (result) {
-            console.log(result.results[0].Message);
+            console.log(result);
             if (!naovaiessamerda.includes(result.results[0].Message)) {
               console.log(result.results[0].Message);
               client.channels.cache
