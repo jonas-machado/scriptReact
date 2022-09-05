@@ -108,35 +108,79 @@ client.on("messageCreate", async (interaction) => {
 const adicionar = () => {
   orion.query(
     {
-      query: `SELECT TOP 15 Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
+      query: `
+                SELECT TOP 15 DAY(EventTime) AS DayTime, 
+                MONTH(EventTime) AS MonthTime, 
+                year(EventTime) AS YearTime, 
+                HOUR(EventTime) AS HourTime, 
+                MINUTE(EventTime) AS MinuteTime, 
+                SECOND(EventTime) AS SecondTime, 
+                Message, 
+                EventTime, 
+                EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC;
+                `,
+      //query: `SELECT TOP 15 GETDATE() AS Time, Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
     },
     function (result) {
+      console.log(result);
       let naovaiessamerda = [];
       result.results.map((event) => {
-        naovaiessamerda.push(event.Message);
+        let evento = {
+          description: event.Message,
+          time: `${event.DayTime}/${event.MonthTime}/${event.YearTime} ${event.HourTime}:${event.MinuteTime}:${event.SecondTime}`,
+        };
+        naovaiessamerda.push(evento);
       });
-
+      console.log(naovaiessamerda);
       setInterval(() => {
         orion.query(
           {
-            query: `SELECT TOP 15 Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
+            query: `
+                SELECT TOP 15 DAY(EventTime) AS DayTime, 
+                MONTH(EventTime) AS MonthTime, 
+                year(EventTime) AS YearTime, 
+                HOUR(EventTime) AS HourTime, 
+                MINUTE(EventTime) AS MinuteTime, 
+                SECOND(EventTime) AS SecondTime, 
+                Message, 
+                EventTime, 
+                EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC;
+                `,
+            //query: `SELECT TOP 15 GETDATE() AS Time, Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
             //query: `SELECT Message, EventTime, GETDATE() AS [GetDate], GETUTCDATE() AS [getUTCDate] FROM Orion.Events`,
           },
           function (result) {
-            console.log(result);
-            if (!naovaiessamerda.includes(result.results[0].Message)) {
-              console.log(result.results[0].Message);
-              client.channels.cache
-                .get(`994225969193828484`)
-                .send(`Esse: ${result.results[0].Message}`);
-              console.log(naovaiessamerda[0]);
-              naovaiessamerda.push(result.results[0].Message);
-            } else {
-              console.log("repetido");
+            let eventNew = [];
+            result.results.map((event) => {
+              let eventN = {
+                description: event.Message,
+                time: event.Time,
+              };
+              eventNew.push(eventN);
+            });
+            try {
+              for (let i = 0; i < naovaiessamerda.length; i++) {
+                if (!naovaiessamerda.includes(eventNew[i])) {
+                  client.channels.cache
+                    .get(`994225969193828484`)
+                    .send(
+                      `${result.results[i].Message} \nData: ${result.results[
+                        i
+                      ].Time.substr(0, 19)
+                        .split("T")
+                        .join(" Horário: ")}`
+                    );
+                  naovaiessamerda = eventNew;
+                } else {
+                  console.log("repetido");
+                }
+              }
+            } catch (err) {
+              console.log(err);
             }
           }
         );
-      }, 10000);
+      }, 50000);
     }
   );
 };
