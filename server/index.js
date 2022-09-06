@@ -117,21 +117,30 @@ const adicionar = () => {
                 SECOND(EventTime) AS SecondTime, 
                 Message, 
                 EventTime, 
+                EventID,
                 EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC;
                 `,
       //query: `SELECT TOP 15 GETDATE() AS Time, Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
     },
     function (result) {
-      console.log(result);
-      let naovaiessamerda = [];
+      let IDEvent = [];
       result.results.map((event) => {
-        let evento = {
-          description: event.Message,
-          time: `${event.DayTime}/${event.MonthTime}/${event.YearTime} ${event.HourTime}:${event.MinuteTime}:${event.SecondTime}`,
-        };
-        naovaiessamerda.push(evento);
+        try {
+          let evento = {
+            description: event.Message,
+            time: `${("0" + event.DayTime).slice(-2)}/${(
+              "0" + event.MonthTime
+            ).slice(-2)}/${event.YearTime} ${("0" + event.HourTime).slice(
+              -2
+            )}:${("0" + event.MinuteTime).slice(-2)}:${(
+              "0" + event.SecondTime
+            ).slice(-2)}`,
+          };
+          IDEvent.push(event.EventID);
+        } catch (err) {
+          console.log(err);
+        }
       });
-      console.log(naovaiessamerda);
       setInterval(() => {
         orion.query(
           {
@@ -144,6 +153,7 @@ const adicionar = () => {
                 SECOND(EventTime) AS SecondTime, 
                 Message, 
                 EventTime, 
+                EventID,
                 EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC;
                 `,
             //query: `SELECT TOP 15 GETDATE() AS Time, Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
@@ -154,23 +164,27 @@ const adicionar = () => {
             result.results.map((event) => {
               let eventN = {
                 description: event.Message,
-                time: event.Time,
+                time: `${("0" + event.DayTime).slice(-2)}/${(
+                  "0" + event.MonthTime
+                ).slice(-2)}/${event.YearTime} ${("0" + event.HourTime).slice(
+                  -2
+                )}:${("0" + event.MinuteTime).slice(-2)}:${(
+                  "0" + event.SecondTime
+                ).slice(-2)}`,
+                id: event.EventID,
               };
               eventNew.push(eventN);
             });
+            console.log(eventNew);
             try {
-              for (let i = 0; i < naovaiessamerda.length; i++) {
-                if (!naovaiessamerda.includes(eventNew[i])) {
+              for (let i = 0; i < eventNew.length; i++) {
+                if (!IDEvent.includes(eventNew[i].id)) {
                   client.channels.cache
                     .get(`994225969193828484`)
                     .send(
-                      `${result.results[i].Message} \nData: ${result.results[
-                        i
-                      ].Time.substr(0, 19)
-                        .split("T")
-                        .join(" Horário: ")}`
+                      `${eventNew[i].description} \nData: ${eventNew[i].time}`
                     );
-                  naovaiessamerda = eventNew;
+                  IDEvent.push(eventNew[i].id);
                 } else {
                   console.log("repetido");
                 }
@@ -180,7 +194,7 @@ const adicionar = () => {
             }
           }
         );
-      }, 50000);
+      }, 10000);
     }
   );
 };
