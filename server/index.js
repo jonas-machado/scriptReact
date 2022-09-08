@@ -173,9 +173,8 @@ const adicionar = () => {
                 ).slice(-2)}`,
                 id: event.EventID,
               };
-              eventNew.push(eventN);
+              eventNew.unshift(eventN);
             });
-            console.log(eventNew);
             try {
               for (let i = 0; i < eventNew.length; i++) {
                 if (!IDEvent.includes(eventNew[i].id)) {
@@ -184,7 +183,9 @@ const adicionar = () => {
                     .send(
                       `${eventNew[i].description} \nData: ${eventNew[i].time}`
                     );
-                  IDEvent.push(eventNew[i].id);
+                  IDEvent.unshift(eventNew[i].id);
+                  IDEvent.pop();
+                  eventNew = [];
                 } else {
                   console.log("repetido");
                 }
@@ -192,6 +193,7 @@ const adicionar = () => {
             } catch (err) {
               console.log(err);
             }
+            console.log(IDEvent);
           }
         );
       }, 10000);
