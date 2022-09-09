@@ -57,13 +57,13 @@ function RegisterPage() {
           >
             <Form className={`col ${styles.loginForm}`}>
               <Row>
-                <Col className="input-group mb-3">
+                <Col className={`${styles.errorField} input-group mb-3`}>
                   <span className="input-group-text" id="basic-addon1">
                     Email
                   </span>
                   <Field
                     name="email"
-                    className={`${styles.formField} form-control`}
+                    className={`${styles.formField} form-control `}
                     aria-label="Username"
                     aria-describedby="basic-addon1"
                   />
@@ -71,6 +71,9 @@ function RegisterPage() {
                     component="span"
                     name="email"
                     className={styles.formError}
+                    render={() => {
+                      console.log("teste");
+                    }}
                   />
                 </Col>
               </Row>

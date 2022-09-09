@@ -72,6 +72,86 @@ const verifyJWT = (req, res, next) => {
   }
 };
 
+app.get("/isUserAuth", verifyJWT, (req, res) => {
+  res.send("Autenticado");
+});
+
+app.get("/login", (req, res) => {
+  if (req.session.user) {
+    res.send({
+      loggedIn: true,
+      user: req.session.user,
+    });
+  } else {
+    res.send({ loggedIn: false });
+  }
+});
+
+app.post("/login", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  db.query(
+    "SELECT * FROM banco.usuarios WHERE email = ?",
+    email,
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+      if (result.length > 0) {
+        bcrypt.compare(password, result[0].password, (err, response) => {
+          if (response) {
+            const id = result[0].idusuarios;
+            const token = jwt.sign({ id }, process.env.SECRET_KEY, {
+              expiresIn: 300,
+            });
+
+            req.session.user = result;
+
+            res.json({ auth: true, token: token, result: result });
+          } else {
+            res.send({ msg: "Alguma coisa deu errada" });
+          }
+        });
+      } else {
+        res.json({ auth: false, msg: "Alguma coisa deu errada" });
+      }
+    }
+  );
+});
+
+app.post("/register", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  db.query(
+    "SELECT * FROM banco.usuarios WHERE email = ?",
+    [email],
+    (err, response) => {
+      if (err) {
+        res.send(err);
+      }
+      if (response.length == 0) {
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+          if (err) {
+            console.log(err);
+          }
+          db.query(
+            "INSERT INTO banco.usuarios (email, password) VALUES (?, ?)",
+            [email, hash],
+            (err, result) => {
+              if (err) {
+                res.send(err);
+              }
+              res.send({ msg: "Cadastrado com sucesso" });
+            }
+          );
+        });
+      } else {
+        res.send({ msg: "Usuário já cadastrado" });
+      }
+    }
+  );
+});
+
 //monitoramento
 app.get("/monitoramento", (req, res) => {
   orion.query(
@@ -179,13 +259,14 @@ const adicionar = () => {
               for (let i = 0; i < eventNew.length; i++) {
                 if (!IDEvent.includes(eventNew[i].id)) {
                   client.channels.cache
-                    .get(`994225969193828484`)
+                    .get(`1017773873321754695`)
                     .send(
-                      `${eventNew[i].description} \nData: ${eventNew[i].time}`
+                      `${eventNew[i].description} \nData: ${eventNew[i].time}\n`
                     );
                   IDEvent.unshift(eventNew[i].id);
                   IDEvent.pop();
                   eventNew = [];
+                  console.log(eventNew[i].description);
                 } else {
                   console.log("repetido");
                 }
@@ -193,7 +274,6 @@ const adicionar = () => {
             } catch (err) {
               console.log(err);
             }
-            console.log(IDEvent);
           }
         );
       }, 10000);
@@ -217,86 +297,6 @@ adicionar();
 //     }else{console.log("repetido")}
 //   })
 // }, 10000)
-
-app.get("/isUserAuth", verifyJWT, (req, res) => {
-  res.send("Autenticado");
-});
-
-app.get("/login", (req, res) => {
-  if (req.session.user) {
-    res.send({
-      loggedIn: true,
-      user: req.session.user,
-    });
-  } else {
-    res.send({ loggedIn: false });
-  }
-});
-
-app.post("/login", (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  db.query(
-    "SELECT * FROM banco.usuarios WHERE email = ?",
-    email,
-    (err, result) => {
-      if (err) {
-        res.send(err);
-      }
-      if (result.length > 0) {
-        bcrypt.compare(password, result[0].password, (err, response) => {
-          if (response) {
-            const id = result[0].idusuarios;
-            const token = jwt.sign({ id }, process.env.SECRET_KEY, {
-              expiresIn: 300,
-            });
-
-            req.session.user = result;
-
-            res.json({ auth: true, token: token, result: result });
-          } else {
-            res.send({ msg: "Alguma coisa deu errada" });
-          }
-        });
-      } else {
-        res.json({ auth: false, msg: "Alguma coisa deu errada" });
-      }
-    }
-  );
-});
-
-app.post("/register", (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  db.query(
-    "SELECT * FROM banco.usuarios WHERE email = ?",
-    [email],
-    (err, response) => {
-      if (err) {
-        res.send(err);
-      }
-      if (response.length == 0) {
-        bcrypt.hash(password, saltRounds, (err, hash) => {
-          if (err) {
-            console.log(err);
-          }
-          db.query(
-            "INSERT INTO banco.usuarios (email, password) VALUES (?, ?)",
-            [email, hash],
-            (err, result) => {
-              if (err) {
-                res.send(err);
-              }
-              res.send({ msg: "Cadastrado com sucesso" });
-            }
-          );
-        });
-      } else {
-        res.send({ msg: "Usuário já cadastrado" });
-      }
-    }
-  );
-});
 
 app.listen(3001, () => {
   console.log("Rodando na porta 3001");
