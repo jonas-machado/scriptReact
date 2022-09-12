@@ -19,13 +19,6 @@
   transition: all 0.2s ease-in-out;
 }
 
-.errorField {
-  box-shadow: 0px 0px 10px rgb(255, 0, 0) !important;
-  padding: 0;
-  margin: 0 0.82rem 0 0.82rem;
-  border-radius: 0.4rem;
-}
-
 .loginForm {
   margin: 0 1rem 0 1rem;
 }
@@ -132,9 +125,58 @@ input:-webkit-autofill:active {
 }
 
 .formError {
-  color: rgba(255, 0, 0, 0.693) !important;
+  position: absolute;
   display: flex;
-  align-items: center;
-  padding: 0 0.5rem 0 0.5rem;
+  justify-content: center;
   border-radius: 0.4rem;
+  box-shadow: 0px 0px 10px rgb(255, 0, 0) !important;
+  width: 544px;
+  height: 42px;
+  border-top-left-radius: 0.4rem !important;
+  border-bottom-left-radius: 0.4rem !important;
+  color: transparent;
+  background-color: transparent;
+}
+
+.toCenter {
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 767px) {
+  .formError {
+    width: 484px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .formError {
+    width: 484px;
+  }
+
+  .registerContainer {
+    min-width: 600px !important;
+    border-radius: 5px;
+    background: rgba(3, 3, 3, 0.663);
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.778);
+    transition: linear;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .formError {
+    width: 370px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .formError {
+    width: 319px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .formError {
+    width: 263px;
+  }
 }

@@ -18,7 +18,7 @@ function RegisterPage() {
     });
 
   const validationRegister = yup.object().shape({
-    email: yup.string().email("E-mail incorreto").required("Necessário"),
+    email: yup.string().email("Email").required("Email"),
     password: yup.string().required("Necessário"),
     confirmPassword: yup
       .string()
@@ -38,6 +38,8 @@ function RegisterPage() {
     });
   };
 
+  const [fError, setFError] = useState(false);
+
   Axios.defaults.withCredentials = true;
 
   return (
@@ -56,8 +58,13 @@ function RegisterPage() {
             validationSchema={validationRegister}
           >
             <Form className={`col ${styles.loginForm}`}>
-              <Row>
-                <Col className={`${styles.errorField} input-group mb-3`}>
+              <Row className={styles.toCenter}>
+                <ErrorMessage
+                  component="label"
+                  name="email"
+                  className={styles.formError}
+                />
+                <Col className={`${styles.divEmail} input-group mb-3`}>
                   <span className="input-group-text" id="basic-addon1">
                     Email
                   </span>
@@ -67,17 +74,14 @@ function RegisterPage() {
                     aria-label="Username"
                     aria-describedby="basic-addon1"
                   />
-                  <ErrorMessage
-                    component="span"
-                    name="email"
-                    className={styles.formError}
-                    render={() => {
-                      console.log("teste");
-                    }}
-                  />
                 </Col>
               </Row>
               <Row className={styles.name2}>
+                <ErrorMessage
+                  component="label"
+                  name="nome"
+                  className={styles.formError}
+                />
                 <Col className="input-group mb-3">
                   <span className="input-group-text" id="basic-addon1">
                     Nome completo
@@ -88,43 +92,44 @@ function RegisterPage() {
                     aria-label="Username"
                     aria-describedby="basic-addon1"
                   />
-                  <ErrorMessage
-                    component="span"
-                    name="nome"
-                    className={styles.formError}
+                </Col>
+              </Row>
+              <Row className={styles.name2}>
+                <ErrorMessage
+                  component="label"
+                  name="password"
+                  className={styles.formError}
+                />
+
+                <Col className="input-group mb-3">
+                  <span className="input-group-text" id="basic-addon1">
+                    Senha
+                  </span>
+                  <Field
+                    name="password"
+                    className={`${styles.formField} form-control`}
                   />
                 </Col>
               </Row>
-              <Col className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">
-                  Senha
-                </span>
-                <Field
-                  name="password"
-                  className={`${styles.formField} form-control`}
-                />
+              <Row className={styles.name2}>
                 <ErrorMessage
-                  component="span"
-                  name="password"
-                  className={styles.formError}
-                />
-              </Col>
-              <Col className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">
-                  Confirmar senha
-                </span>
-                <Field
-                  name="confirmPassword"
-                  className={`${styles.formField} form-control`}
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-                <ErrorMessage
-                  component="span"
+                  component="label"
                   name="confirmPassword"
                   className={styles.formError}
                 />
-              </Col>
+                <Col className="input-group mb-3">
+                  <span className="input-group-text" id="basic-addon1">
+                    Confirmar senha
+                  </span>
+                  <Field
+                    name="confirmPassword"
+                    className={`${styles.formField} form-control`}
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                  />
+                </Col>
+              </Row>
+
               <Col className={`${styles.btnEnviar} d-grid gap-2`}>
                 <input className={styles.a} id="register" type="submit" />
               </Col>
