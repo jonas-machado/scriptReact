@@ -59,6 +59,8 @@
   border-radius: 6px;
   border: none;
   background: rgba(3, 3, 3, 0.213);
+  border-top-right-radius: 0.4rem!important;
+  border-bottom-right-radius: 0.4rem!important;
   -webkit-transition: all 2s ease-in-out;
   -moz-transition: all 2s ease-in-out;
   -o-transition: all 2s ease-in-out;
@@ -134,6 +136,8 @@ input:-webkit-autofill:active {
   height: 42px;
   border-top-left-radius: 0.4rem !important;
   border-bottom-left-radius: 0.4rem !important;
+  border-top-right-radius: 0.4rem!important;
+  border-bottom-right-radius: 0.4rem!important;
   color: transparent;
   background-color: transparent;
 }
@@ -143,19 +147,16 @@ input:-webkit-autofill:active {
   justify-content: center;
 }
 
-@media only screen and (max-width: 767px) {
+@media screen and (min-width: 481px) and (max-width: 768px) {
   .formError {
-    width: 484px;
-  }
-}
-
-@media only screen and (max-width: 575px) {
-  .formError {
-    width: 484px;
+    width: 427px;
   }
 
   .registerContainer {
-    min-width: 600px !important;
+    min-width: 484px !important;
+    max-width: 484px !important;
+
+    width: 484px;
     border-radius: 5px;
     background: rgba(3, 3, 3, 0.663);
     box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.778);
@@ -163,20 +164,52 @@ input:-webkit-autofill:active {
   }
 }
 
-@media only screen and (max-width: 425px) {
+@media screen and (min-width: 425px) and (max-width: 481px) {
   .formError {
-    width: 370px;
+    width: 342px;
+  }
+
+  .registerContainer {
+    min-width: 400px !important;
+    max-width: 400px !important;
+
+    width: 400px;
+    border-radius: 5px;
+    background: rgba(3, 3, 3, 0.663);
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.778);
+    transition: linear;
   }
 }
 
-@media only screen and (max-width: 375px) {
+
+@media screen and (min-width: 375px) and (max-width: 425px) {
   .formError {
-    width: 319px;
+    width: 344px;
+  }
+
+  .registerContainer {
+    min-width: 400px !important;
+    max-width: 400px !important;
+
+    width: 400px;
+    border-radius: 5px;
+    background: rgba(3, 3, 3, 0.663);
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.778);
+    transition: linear;
   }
 }
-
-@media only screen and (max-width: 320px) {
+@media screen and (min-width: 0px) and (max-width: 375px) {
   .formError {
-    width: 263px;
+    width: 265px;
+  }
+
+  .registerContainer {
+    min-width: 320px !important;
+    max-width: 320px !important;
+    width: 320px;
+    border-radius: 5px;
+    background: rgba(3, 3, 3, 0.663);
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.778);
+    transition: linear;
   }
 }

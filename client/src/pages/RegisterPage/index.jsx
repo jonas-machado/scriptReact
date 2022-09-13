@@ -76,7 +76,7 @@ function RegisterPage() {
                   />
                 </Col>
               </Row>
-              <Row className={styles.name2}>
+              <Row className={styles.toCenter}>
                 <ErrorMessage
                   component="label"
                   name="nome"
@@ -94,7 +94,7 @@ function RegisterPage() {
                   />
                 </Col>
               </Row>
-              <Row className={styles.name2}>
+              <Row className={styles.toCenter}>
                 <ErrorMessage
                   component="label"
                   name="password"
@@ -111,7 +111,7 @@ function RegisterPage() {
                   />
                 </Col>
               </Row>
-              <Row className={styles.name2}>
+              <Row className={styles.toCenter}>
                 <ErrorMessage
                   component="label"
                   name="confirmPassword"
