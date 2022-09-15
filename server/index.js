@@ -7,14 +7,14 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const orion = require("solar-orionjs")({
-  server: "172.16.40.9",
-  port: 17778,
-  auth: {
-    username: "redes2020",
-    password: "OT#internet2018",
-  },
-});
+// const orion = require("solar-orionjs")({
+//   server: "172.16.40.9",
+//   port: 17778,
+//   auth: {
+//     username: "redes2020",
+//     password: "OT#internet2018",
+//   },
+// });
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -76,17 +76,6 @@ app.get("/isUserAuth", verifyJWT, (req, res) => {
   res.send("Autenticado");
 });
 
-app.get("/login", (req, res) => {
-  if (req.session.user) {
-    res.send({
-      loggedIn: true,
-      user: req.session.user,
-    });
-  } else {
-    res.send({ loggedIn: false });
-  }
-});
-
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -101,7 +90,8 @@ app.post("/login", (req, res) => {
         bcrypt.compare(password, result[0].password, (err, response) => {
           if (response) {
             const id = result[0].idusuarios;
-            const token = jwt.sign({ id }, process.env.SECRET_KEY, {
+            const email = result[0].email;
+            const token = jwt.sign({ email, id }, process.env.SECRET_KEY, {
               expiresIn: 300,
             });
 
@@ -153,134 +143,134 @@ app.post("/register", (req, res) => {
 });
 
 //monitoramento
-app.get("/monitoramento", (req, res) => {
-  orion.query(
-    {
-      query: `SELECT TOP 25 Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
-    },
-    function (result) {
-      res.send(result);
-    }
-  );
-});
+// app.get("/monitoramento", (req, res) => {
+//   orion.query(
+//     {
+//       query: `SELECT TOP 25 Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
+//     },
+//     function (result) {
+//       res.send(result);
+//     }
+//   );
+// });
 
 //discord bot
 
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildMessages,
-  ],
-}); //create new client
+// const client = new Client({
+//   intents: [
+//     GatewayIntentBits.Guilds,
+//     GatewayIntentBits.MessageContent,
+//     GatewayIntentBits.GuildMessages,
+//   ],
+// }); //create new client
 
-client.on("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-});
+// client.on("ready", () => {
+//   console.log(`Logged in as ${client.user.tag}!`);
+// });
 
-client.login(process.env.TOKEN);
-client.on("messageCreate", async (interaction) => {
-  if (interaction.content === "top") {
-    await interaction.reply("deu certo meu bom");
-  }
-});
+// client.login(process.env.TOKEN);
+// client.on("messageCreate", async (interaction) => {
+//   if (interaction.content === "top") {
+//     await interaction.reply("deu certo meu bom");
+//   }
+// });
 
-const adicionar = () => {
-  orion.query(
-    {
-      query: `
-                SELECT TOP 15 DAY(EventTime) AS DayTime, 
-                MONTH(EventTime) AS MonthTime, 
-                year(EventTime) AS YearTime, 
-                HOUR(EventTime) AS HourTime, 
-                MINUTE(EventTime) AS MinuteTime, 
-                SECOND(EventTime) AS SecondTime, 
-                Message, 
-                EventTime, 
-                EventID,
-                EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC;
-                `,
-      //query: `SELECT TOP 15 GETDATE() AS Time, Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
-    },
-    function (result) {
-      let IDEvent = [];
-      result.results.map((event) => {
-        try {
-          let evento = {
-            description: event.Message,
-            time: `${("0" + event.DayTime).slice(-2)}/${(
-              "0" + event.MonthTime
-            ).slice(-2)}/${event.YearTime} ${("0" + event.HourTime).slice(
-              -2
-            )}:${("0" + event.MinuteTime).slice(-2)}:${(
-              "0" + event.SecondTime
-            ).slice(-2)}`,
-          };
-          IDEvent.push(event.EventID);
-        } catch (err) {
-          console.log(err);
-        }
-      });
-      setInterval(() => {
-        orion.query(
-          {
-            query: `
-                SELECT TOP 15 DAY(EventTime) AS DayTime, 
-                MONTH(EventTime) AS MonthTime, 
-                year(EventTime) AS YearTime, 
-                HOUR(EventTime) AS HourTime, 
-                MINUTE(EventTime) AS MinuteTime, 
-                SECOND(EventTime) AS SecondTime, 
-                Message, 
-                EventTime, 
-                EventID,
-                EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC;
-                `,
-            //query: `SELECT TOP 15 GETDATE() AS Time, Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
-            //query: `SELECT Message, EventTime, GETDATE() AS [GetDate], GETUTCDATE() AS [getUTCDate] FROM Orion.Events`,
-          },
-          function (result) {
-            let eventNew = [];
-            result.results.map((event) => {
-              let eventN = {
-                description: event.Message,
-                time: `${("0" + event.DayTime).slice(-2)}/${(
-                  "0" + event.MonthTime
-                ).slice(-2)}/${event.YearTime} ${("0" + event.HourTime).slice(
-                  -2
-                )}:${("0" + event.MinuteTime).slice(-2)}:${(
-                  "0" + event.SecondTime
-                ).slice(-2)}`,
-                id: event.EventID,
-              };
-              eventNew.unshift(eventN);
-            });
-            try {
-              for (let i = 0; i < eventNew.length; i++) {
-                if (!IDEvent.includes(eventNew[i].id)) {
-                  client.channels.cache
-                    .get(`1017773873321754695`)
-                    .send(
-                      `${eventNew[i].description} \nData: ${eventNew[i].time}\n`
-                    );
-                  IDEvent.unshift(eventNew[i].id);
-                  IDEvent.pop();
-                  eventNew = [];
-                  console.log(eventNew[i].description);
-                } else {
-                  console.log("repetido");
-                }
-              }
-            } catch (err) {
-              console.log(err);
-            }
-          }
-        );
-      }, 10000);
-    }
-  );
-};
-adicionar();
+// const adicionar = () => {
+//   orion.query(
+//     {
+//       query: `
+//                 SELECT TOP 15 DAY(EventTime) AS DayTime,
+//                 MONTH(EventTime) AS MonthTime,
+//                 year(EventTime) AS YearTime,
+//                 HOUR(EventTime) AS HourTime,
+//                 MINUTE(EventTime) AS MinuteTime,
+//                 SECOND(EventTime) AS SecondTime,
+//                 Message,
+//                 EventTime,
+//                 EventID,
+//                 EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC;
+//                 `,
+//       //query: `SELECT TOP 15 GETDATE() AS Time, Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
+//     },
+//     function (result) {
+//       let IDEvent = [];
+//       result.results.map((event) => {
+//         try {
+//           let evento = {
+//             description: event.Message,
+//             time: `${("0" + event.DayTime).slice(-2)}/${(
+//               "0" + event.MonthTime
+//             ).slice(-2)}/${event.YearTime} ${("0" + event.HourTime).slice(
+//               -2
+//             )}:${("0" + event.MinuteTime).slice(-2)}:${(
+//               "0" + event.SecondTime
+//             ).slice(-2)}`,
+//           };
+//           IDEvent.push(event.EventID);
+//         } catch (err) {
+//           console.log(err);
+//         }
+//       });
+//       setInterval(() => {
+//         orion.query(
+//           {
+//             query: `
+//                 SELECT TOP 15 DAY(EventTime) AS DayTime,
+//                 MONTH(EventTime) AS MonthTime,
+//                 year(EventTime) AS YearTime,
+//                 HOUR(EventTime) AS HourTime,
+//                 MINUTE(EventTime) AS MinuteTime,
+//                 SECOND(EventTime) AS SecondTime,
+//                 Message,
+//                 EventTime,
+//                 EventID,
+//                 EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC;
+//                 `,
+//             //query: `SELECT TOP 15 GETDATE() AS Time, Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
+//             //query: `SELECT Message, EventTime, GETDATE() AS [GetDate], GETUTCDATE() AS [getUTCDate] FROM Orion.Events`,
+//           },
+//           function (result) {
+//             let eventNew = [];
+//             result.results.map((event) => {
+//               let eventN = {
+//                 description: event.Message,
+//                 time: `${("0" + event.DayTime).slice(-2)}/${(
+//                   "0" + event.MonthTime
+//                 ).slice(-2)}/${event.YearTime} ${("0" + event.HourTime).slice(
+//                   -2
+//                 )}:${("0" + event.MinuteTime).slice(-2)}:${(
+//                   "0" + event.SecondTime
+//                 ).slice(-2)}`,
+//                 id: event.EventID,
+//               };
+//               eventNew.unshift(eventN);
+//             });
+//             try {
+//               for (let i = 0; i < eventNew.length; i++) {
+//                 if (!IDEvent.includes(eventNew[i].id)) {
+//                   client.channels.cache
+//                     .get(`1017773873321754695`)
+//                     .send(
+//                       `${eventNew[i].description} \nData: ${eventNew[i].time}\n`
+//                     );
+//                   IDEvent.unshift(eventNew[i].id);
+//                   IDEvent.pop();
+//                   eventNew = [];
+//                   console.log(eventNew[i].description);
+//                 } else {
+//                   console.log("repetido");
+//                 }
+//               }
+//             } catch (err) {
+//               console.log(err);
+//             }
+//           }
+//         );
+//       }, 10000);
+//     }
+//   );
+// };
+// adicionar();
 //   setInterval(() =>{
 //   orion.query({query:`SELECT TOP 15 Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`},
 //   function (result){

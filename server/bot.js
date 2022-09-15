@@ -29,7 +29,12 @@ const event = new EmbedBuilder()
   .setDescription("testando embed builder")
   .setTimestamp();
 
-client.on("messageCreate", (interaction) => {
+client.on("messageCreate", async (interaction) => {
+  if (interaction.content == "Adria, paga o salgadinho!!!") {
+    const user = await client.users.fetch("997116970287771699");
+    user.send("To esperando o salgadinho :rage:");
+    interaction.reply("Ela foi avisada");
+  }
   if (interaction.content === "top") {
     orion.query(
       {
@@ -83,11 +88,15 @@ client.on("messageCreate", (interaction) => {
             .setTitle(result.results[0].NodeName.replace(/_/g, " "))
             .setDescription(result.results[0].Message)
             .addFields(
-              { name: "IP", value: result.results[0].IPAddress, inline: true },
-              result.results[10]?.Department
+              {
+                name: "IP",
+                value: result.results[0].IPAddress + "",
+                inline: true,
+              },
+              result.results[0]?.Department
                 ? {
                     name: "TIPO",
-                    value: result.results[10].Department,
+                    value: result.results[0].Department + "",
                     inline: true,
                   }
                 : {
@@ -95,6 +104,11 @@ client.on("messageCreate", (interaction) => {
                     value: "\u200B",
                     inline: true,
                   },
+              {
+                name: "\u200B",
+                value: "\u200B",
+                inline: true,
+              },
               result.results[0].POP_ID || result.results[0].Location
                 ? {
                     name: "LOCAL",
@@ -107,6 +121,7 @@ client.on("messageCreate", (interaction) => {
                         ? result.results[0].Location + "."
                         : ""
                     }`,
+                    inline: true,
                   }
                 : {
                     name: "\u200B",
@@ -124,15 +139,13 @@ client.on("messageCreate", (interaction) => {
                     inline: true,
                   }
             )
-            .setTimestamp(
-              `${result.results[i].Message} \nData: ${(
-                "0" + result.results[i].DayTime
-              ).slice(-2)}/${("0" + result.results[i].MonthTime).slice(-2)}/${
-                result.results[i].YearTime
-              } ${("0" + result.results[i].HourTime).slice(-2)}:${(
-                "0" + result.results[i].MinuteTime
-              ).slice(-2)}:${("0" + result.results[i].SecondTime).slice(-2)}\n`
-            );
+            .setFooter({
+              text: `${("0" + result.results[0].DayTime).slice(-2)}/${(
+                "0" + result.results[0].MonthTime
+              ).slice(-2)}/${result.results[0].YearTime} ${(
+                "0" + result.results[0].HourTime
+              ).slice(-2)}:${("0" + result.results[0].MinuteTime).slice(-2)}`,
+            });
           interaction.reply({ embeds: [events] });
         } catch (err) {
           console.log(err);
@@ -146,7 +159,7 @@ const adicionar = () => {
   orion.query(
     {
       query: `
-      SELECT TOP 10 
+      SELECT TOP 100 
           DAY(EventTime) AS DayTime, 
           MONTH(EventTime) AS MonthTime, 
           year(EventTime) AS YearTime, 
@@ -192,7 +205,7 @@ const adicionar = () => {
         orion.query(
           {
             query: `
-            SELECT TOP 10 
+            SELECT TOP 100 
           DAY(EventTime) AS DayTime, 
           MONTH(EventTime) AS MonthTime, 
           year(EventTime) AS YearTime, 
@@ -260,16 +273,8 @@ const adicionar = () => {
                             inline: true,
                           },
                       {
-                        name: "DIA/HORA",
-                        value: `${("0" + result.results[i].DayTime).slice(
-                          -2
-                        )}/${("0" + result.results[i].MonthTime).slice(-2)}/${
-                          result.results[i].YearTime
-                        } ${("0" + result.results[i].HourTime).slice(-2)}:${(
-                          "0" + result.results[i].MinuteTime
-                        ).slice(-2)}:${(
-                          "0" + result.results[i].SecondTime
-                        ).slice(-2)}`,
+                        name: "\u200B",
+                        value: "\u200B",
                         inline: true,
                       },
                       result.results[i].POP_ID || result.results[i].Location
@@ -284,6 +289,7 @@ const adicionar = () => {
                                 ? result.results[i].Location + "."
                                 : ""
                             }`,
+                            inline: true,
                           }
                         : {
                             name: "\u200B",
@@ -300,9 +306,18 @@ const adicionar = () => {
                             value: "\u200B",
                             inline: true,
                           }
-                    );
+                    )
+                    .setFooter({
+                      text: `${("0" + result.results[i].DayTime).slice(-2)}/${(
+                        "0" + result.results[i].MonthTime
+                      ).slice(-2)}/${result.results[i].YearTime} ${(
+                        "0" + result.results[i].HourTime
+                      ).slice(-2)}:${("0" + result.results[i].MinuteTime).slice(
+                        -2
+                      )}`,
+                    });
                   client.channels.cache
-                    .get(`994225969193828484`)
+                    .get(`1017773873321754695`)
                     .send({ embeds: [events] });
                   // .send(
                   //   `${result.results[i].Message} \nData: ${(
