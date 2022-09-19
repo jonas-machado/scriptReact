@@ -17,6 +17,12 @@ function RegisterPage() {
       pauseOnFocusLoss: true,
     });
 
+  const notifySuc = (text) =>
+    toast.success(text, {
+      theme: "dark",
+      pauseOnFocusLoss: true,
+    });
+
   const validationRegister = yup.object().shape({
     email: yup.string().email("Email").required("Email"),
     password: yup.string().required("Necessário"),
@@ -31,9 +37,12 @@ function RegisterPage() {
     Axios.post("http://127.0.0.1:3001/register", {
       email: values.email,
       password: values.password,
+      nome: values.nome,
     }).then((response) => {
       if (response.data.msg == "Usuário já cadastrado") {
         notify(response.data.msg);
+      } else if (response.data.msg == "Cadastrado com sucesso") {
+        notifySuc(response.data.msg);
       }
     });
   };

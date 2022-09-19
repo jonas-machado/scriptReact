@@ -112,6 +112,7 @@ app.post("/login", (req, res) => {
 app.post("/register", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  const nome = req.body.nome;
   db.query(
     "SELECT * FROM banco.usuarios WHERE email = ?",
     [email],
@@ -125,11 +126,11 @@ app.post("/register", (req, res) => {
             console.log(err);
           }
           db.query(
-            "INSERT INTO banco.usuarios (email, password) VALUES (?, ?)",
-            [email, hash],
+            "INSERT INTO banco.usuarios (email, password, nome) VALUES (?, ?, ?)",
+            [email, hash, nome],
             (err, result) => {
               if (err) {
-                res.send(err);
+                console.log(err);
               }
               res.send({ msg: "Cadastrado com sucesso" });
             }
