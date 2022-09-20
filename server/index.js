@@ -35,7 +35,7 @@ const db = mysql.createPool({
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://127.0.0.1:5173"],
+    origin: ["http://127.0.0.1:3000"],
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -57,17 +57,17 @@ app.use(
 );
 
 const verifyJWT = (req, res, next) => {
-  const token = req.headers["x-access-token"];
+  const token = req.cookies.access_token;
   if (!token) {
     res.send("Precisa do token");
   } else {
-    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err) => {
       if (err) {
         res.json({ auth: false, msg: "falhou" });
-      } else {
-        req.userId = decoded.id;
-        next();
       }
+      req.userId = data.id;
+      req.userEmail = data.email;
+      next();
     });
   }
 };
@@ -91,13 +91,17 @@ app.post("/login", (req, res) => {
           if (response) {
             const id = result[0].idusuarios;
             const email = result[0].email;
-            const token = jwt.sign({ email, id }, process.env.SECRET_KEY, {
-              expiresIn: 300,
-            });
-
-            req.session.user = result;
-
-            res.json({ auth: true, token: token, result: result });
+            const token = jwt.sign(
+              { email: email, id: id },
+              process.env.SECRET_KEY,
+              {
+                expiresIn: 300,
+              }
+            );
+            res
+              .cookie("token", token, { httpOnly: true })
+              .status(200)
+              .json({ message: "LOGADO" });
           } else {
             res.send({ msg: "Alguma coisa deu errada" });
           }

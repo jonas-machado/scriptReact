@@ -32,12 +32,11 @@ function LoginPage() {
       password: values.password,
     })
       .then((result) => {
+        console.log(result);
         if (!result.data.auth) {
           setLoginStatus(false);
         } else {
-          localStorage.setItem("token", result.data.token);
           setLoginStatus(true);
-          userAuthenticated();
         }
       })
       .catch((error) => {

@@ -59,8 +59,8 @@
   border-radius: 6px;
   border: none;
   background: rgba(3, 3, 3, 0.213);
-  border-top-right-radius: 0.4rem!important;
-  border-bottom-right-radius: 0.4rem!important;
+  border-top-right-radius: 0.4rem !important;
+  border-bottom-right-radius: 0.4rem !important;
   -webkit-transition: all 2s ease-in-out;
   -moz-transition: all 2s ease-in-out;
   -o-transition: all 2s ease-in-out;
@@ -112,7 +112,8 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.622) !important;
+  -webkit-text-fill-color: none !important;
+  caret-color: rgba(208, 208, 208, 0.812);
 }
 
 .alertDark {
@@ -136,8 +137,8 @@ input:-webkit-autofill:active {
   height: 42px;
   border-top-left-radius: 0.4rem !important;
   border-bottom-left-radius: 0.4rem !important;
-  border-top-right-radius: 0.4rem!important;
-  border-bottom-right-radius: 0.4rem!important;
+  border-top-right-radius: 0.4rem !important;
+  border-bottom-right-radius: 0.4rem !important;
   color: transparent;
   background-color: transparent;
 }
@@ -180,7 +181,6 @@ input:-webkit-autofill:active {
     transition: linear;
   }
 }
-
 
 @media screen and (min-width: 375px) and (max-width: 425px) {
   .formError {
