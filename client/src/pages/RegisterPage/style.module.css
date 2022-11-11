@@ -13,9 +13,6 @@
 }
 
 .divEmail {
-  -webkit-transition: all 2s ease-in-out;
-  -moz-transition: all 2s ease-in-out;
-  -o-transition: all 2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 
@@ -61,9 +58,6 @@
   background: rgba(3, 3, 3, 0.213);
   border-top-right-radius: 0.4rem !important;
   border-bottom-right-radius: 0.4rem !important;
-  -webkit-transition: all 2s ease-in-out;
-  -moz-transition: all 2s ease-in-out;
-  -o-transition: all 2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 
@@ -71,19 +65,6 @@
   outline: none;
   box-shadow: 0px 0px 10px rgb(0, 0, 0);
   background: rgba(3, 3, 3, 0.18);
-}
-
-::-webkit-input-placeholder {
-  color: #ddd;
-}
-:-moz-placeholder {
-  color: red;
-}
-::-moz-placeholder {
-  color: red;
-}
-:-ms-input-placeholder {
-  color: #333;
 }
 
 .a {
@@ -111,9 +92,9 @@
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: none !important;
+  -webkit-text-fill-color: rgba(208, 208, 208, 0.812) !important;
   caret-color: rgba(208, 208, 208, 0.812);
+  color: rgba(208, 208, 208, 0.812);
 }
 
 .alertDark {
