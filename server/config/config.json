@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": 35796482,
-    "database": "database_development",
-    "host": "localhost",
+    "password": "35796482",
+    "database": "script_da_guriada",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
