@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "35796482",
-    "database": "script_da_guriada",
+    "database": "sdg",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

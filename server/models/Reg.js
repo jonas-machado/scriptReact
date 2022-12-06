@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Cadastro = sequelize.define("Cadastro", {
-    idusuarios: {
+  const Reg = sequelize.define("Reg", {
+    iduser: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -19,5 +19,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  return Cadastro;
+  return Reg;
 };

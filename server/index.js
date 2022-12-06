@@ -6,6 +6,7 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const db = require("./models");
 
 const orion = require("solar-orionjs")({
   server: "172.16.40.9",
@@ -24,13 +25,6 @@ const axios = require("axios");
 const jwt = require("jsonwebtoken");
 
 const { Client, GatewayIntentBits } = require("discord.js");
-
-const db = mysql.createPool({
-  host: "127.0.0.1",
-  user: "root",
-  password: "35796482",
-  database: "banco",
-});
 
 app.use(express.json());
 app.use(
@@ -158,6 +152,8 @@ app.get("/monitoramento", (req, res) => {
   );
 });
 
-app.listen(3001, () => {
-  console.log("Rodando na porta 3001");
+db.sequelize.sync().then(() => {
+  app.listen(3001, () => {
+    console.log("Server running on port 3001");
+  });
 });
