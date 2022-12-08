@@ -8,7 +8,23 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const db = require("./models");
 
+const orion = require("solar-orionjs")({
+  server: "172.16.40.9",
+  port: 17778,
+  auth: {
+    username: "redes2020",
+    password: "OT#internet2018",
+  },
+});
+
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const axios = require("axios");
+
 const jwt = require("jsonwebtoken");
+
+const { Client, GatewayIntentBits } = require("discord.js");
 
 app.use(express.json());
 app.use(
@@ -39,42 +55,8 @@ app.get("/isUserAuth", verifyJWT, (req, res) => {
   res.send("Autenticado");
 });
 
-app.post("/login", (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  db.query(
-    "SELECT * FROM banco.usuarios WHERE email = ?",
-    email,
-    (err, result) => {
-      if (err) {
-        res.send(err);
-      }
-      if (result.length > 0) {
-        bcrypt.compare(password, result[0].password, (err, response) => {
-          if (response) {
-            const id = result[0].idusuarios;
-            const email = result[0].email;
-            const token = jwt.sign(
-              { email: email, id: id },
-              process.env.SECRET_KEY,
-              {
-                expiresIn: 300,
-              }
-            );
-            res
-              .cookie("token", token, { httpOnly: true })
-              .status(200)
-              .json({ message: "LOGADO" });
-          } else {
-            res.send({ msg: "Alguma coisa deu errada" });
-          }
-        });
-      } else {
-        res.json({ auth: false, msg: "Alguma coisa deu errada" });
-      }
-    }
-  );
-});
+// const loginRouter = require("./routes/Login");
+// app.use("/post", loginRouter);
 
 app.post("/register2", (req, res) => {
   const email = req.body.email;

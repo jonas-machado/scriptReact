@@ -36,8 +36,8 @@ function RegisterPage() {
   const handleClickRegister = (values) => {
     Axios.post("http://127.0.0.1:3001/register", {
       email: values.email,
+      name: values.nome,
       password: values.password,
-      nome: values.nome,
     }).then((response) => {
       if (response.data.msg == "Usuário já cadastrado") {
         notify(response.data.msg);
@@ -46,8 +46,6 @@ function RegisterPage() {
       }
     });
   };
-
-  const [fError, setFError] = useState(false);
 
   Axios.defaults.withCredentials = true;
 
