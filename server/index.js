@@ -8,23 +8,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const db = require("./models");
 
-const orion = require("solar-orionjs")({
-  server: "172.16.40.9",
-  port: 17778,
-  auth: {
-    username: "redes2020",
-    password: "OT#internet2018",
-  },
-});
-
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
-const axios = require("axios");
-
 const jwt = require("jsonwebtoken");
-
-const { Client, GatewayIntentBits } = require("discord.js");
 
 app.use(express.json());
 app.use(
@@ -32,21 +16,6 @@ app.use(
     origin: ["http://127.0.0.1:3000"],
     methods: ["GET", "POST"],
     credentials: true,
-  })
-);
-
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(
-  session({
-    key: "userId",
-    secret: process.env.SECRET_KEY,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 60 * 60 * 24 * 1000,
-    },
   })
 );
 
@@ -107,7 +76,7 @@ app.post("/login", (req, res) => {
   );
 });
 
-app.post("/register", (req, res) => {
+app.post("/register2", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const nome = req.body.nome;
@@ -141,16 +110,8 @@ app.post("/register", (req, res) => {
   );
 });
 
-app.get("/monitoramento", (req, res) => {
-  orion.query(
-    {
-      query: `SELECT TOP 25 Message, EventTime, EventType FROM Orion.Events WHERE EventType LIKE "1" OR EventType LIKE "5" OR EventType LIKE "10" OR EventType LIKE "11" ORDER BY EventTime DESC`,
-    },
-    function (result) {
-      res.json(result);
-    }
-  );
-});
+const regRouter = require("./routes/Reg");
+app.use("/register", regRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
