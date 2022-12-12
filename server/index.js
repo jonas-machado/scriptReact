@@ -2,10 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const app = express();
-const mysql = require("mysql2");
 const cors = require("cors");
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
 const db = require("./models");
 
 const orion = require("solar-orionjs")({
@@ -17,19 +14,12 @@ const orion = require("solar-orionjs")({
   },
 });
 
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
-const axios = require("axios");
-
 const jwt = require("jsonwebtoken");
-
-const { Client, GatewayIntentBits } = require("discord.js");
 
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://127.0.0.1:3000"],
+    origin: ["http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -57,40 +47,6 @@ app.get("/isUserAuth", verifyJWT, (req, res) => {
 
 // const loginRouter = require("./routes/Login");
 // app.use("/post", loginRouter);
-
-app.post("/register2", (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  const nome = req.body.nome;
-  db.query(
-    "SELECT * FROM banco.usuarios WHERE email = ?",
-    [email],
-    (err, response) => {
-      if (err) {
-        res.send(err);
-      }
-      if (response.length == 0) {
-        bcrypt.hash(password, saltRounds, (err, hash) => {
-          if (err) {
-            console.log(err);
-          }
-          db.query(
-            "INSERT INTO banco.usuarios (email, password, nome) VALUES (?, ?, ?)",
-            [email, hash, nome],
-            (err, result) => {
-              if (err) {
-                console.log(err);
-              }
-              res.send({ msg: "Cadastrado com sucesso" });
-            }
-          );
-        });
-      } else {
-        res.send({ msg: "Usuário já cadastrado" });
-      }
-    }
-  );
-});
 
 const regRouter = require("./routes/Reg");
 app.use("/register", regRouter);
