@@ -38,8 +38,8 @@ app.get("/isUserAuth", verifyJWT, (req, res) => {
 // const loginRouter = require("./routes/Login");
 // app.use("/post", loginRouter);
 
-const regRouter = require("./routes/Reg");
-app.use("/register", regRouter);
+const regRouter = require("./controllers/register");
+app.post("/register", regRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
